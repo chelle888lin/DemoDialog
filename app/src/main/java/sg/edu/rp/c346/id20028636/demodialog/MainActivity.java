@@ -3,14 +3,20 @@ package sg.edu.rp.c346.id20028636.demodialog;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +32,10 @@ public class MainActivity extends AppCompatActivity {
     EditText etNum1;
     EditText etNum2;
     TextView tv4;
+    Button btnDemo4;
+    TextView tvDemo4;
+    Button btnDemo5;
+    TextView tvDemo5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
         etNum1 = findViewById(R.id.editNum1);
         etNum2 = findViewById(R.id.editNum2);
         tv4 = findViewById(R.id.textView4);
+        btnDemo4 = findViewById(R.id.buttonDemo4);
+        tvDemo4 = findViewById(R.id.textViewDemo4);
+        btnDemo5 = findViewById(R.id.buttonDemo5);
+        tvDemo5 = findViewById(R.id.textViewDemo5);
 
         btnDemo1.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -169,6 +183,53 @@ public class MainActivity extends AppCompatActivity {
                 myBuilder.setNegativeButton("CANCEL", null);
                 AlertDialog myDialog = myBuilder.create();
                 myDialog.show();
+            }
+        });
+
+        btnDemo4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Create the Listener to set the date
+                DatePickerDialog.OnDateSetListener myDateListener = new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        tvDemo4.setText("Date: " + dayOfMonth + "/" + (monthOfYear+1) + "/" + year);
+                    }
+                };
+
+                // Create the Date Picker Dialog to show the current date when it first appears
+                Calendar now = Calendar.getInstance();
+                int year = now.get(Calendar.YEAR);
+                int month = now.get(Calendar.MONTH);
+                int day = now.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog myDateDialog = new DatePickerDialog(MainActivity.this,
+                        myDateListener, year, month, day);
+
+                myDateDialog.show();
+
+            }
+        });
+
+        btnDemo5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Create the Listener to set the date
+                TimePickerDialog.OnTimeSetListener myTimeListener = new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onDateSet(TimePicker view, int hourOfDay, int minute) {
+                        tvDemo5.setText("Time: " + hourOfDay + ":" + minute);
+                    }
+                };
+
+                // Create the Date Picker Dialog to show the current date when it first appears
+                Calendar now = Calendar.getInstance();
+                int hourOfDay = now.get(Calendar.HOUR_OF_DAY);  // Current Hour
+                int minute = now.get(Calendar.MINUTE);  // Current Minute
+                TimePickerDialog myTimeDialog = new TimePickerDialog(MainActivity.this,
+                        myTimeListener, hourOfDay, minute, true);
+
+
+
             }
         });
     }
